@@ -17,72 +17,111 @@ var casesV2 = []struct {
 	typ string
 	raw any
 	key KeyV2
+	v1  string
 }{
 	{
 		id:  "O_kgDOAEHT7A", // golang
 		typ: TypeOrganization,
 		raw: []any{int8(0), uint32(4314092)},
 		key: OrgKey{4314092},
+		v1:  "MDEyOk9yZ2FuaXphdGlvbjQzMTQwOTI=",
 	},
 	{
 		id:  "R_kgDOAWBufw", // golang/go
 		typ: TypeRepository,
 		raw: []any{int8(0), uint32(23096959)},
 		key: RepoKey{23096959},
+		v1:  "MDEwOlJlcG9zaXRvcnkyMzA5Njk1OQ==",
 	},
 	{
 		id:  "I_kwDOAWBuf84DDmhc", // golang/go#1
 		typ: TypeIssue,
 		raw: []any{int8(0), uint32(23096959), uint32(51275868)},
 		key: IssueKeyV2{23096959, 51275868},
+		v1:  "MDU6SXNzdWU1MTI3NTg2OA==",
 	},
 	{
 		id:  "PR_kwDOAWBuf84Bh4UQ", // golang/go#9219
 		typ: TypePullRequest,
 		raw: []any{int8(0), uint32(23096959), uint32(25658640)},
 		key: PRKeyV2{23096959, 25658640},
+		v1:  "MDExOlB1bGxSZXF1ZXN0MjU2NTg2NDA=",
+	},
+	{
+		id:  "IC_kwDOAWBuf84D78lV", // golang/go#1, first comment
+		typ: TypeIssueComment,
+		raw: []any{int8(0), uint32(23096959), uint32(66046293)},
+		key: IssueCommentKeyV2{23096959, 66046293},
+		v1:  "MDEyOklzc3VlQ29tbWVudDY2MDQ2Mjkz",
+	},
+	{
+		id:  "PRR_kwDOAToIks4ACauz", // kubernetes/kubernetes#24536, first review
+		typ: TypePullRequestReview,
+		raw: []any{int8(0), uint32(20580498), uint32(633779)},
+		key: PRReviewKeyV2{20580498, 633779},
+		v1:  "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NjMzNzc5",
+	},
+	{
+		id:  "PRRT_kwDOAToIks4CZUT4", // kubernetes/kubernetes#24536, first thread
+		typ: TypePullRequestReviewThread,
+		raw: []any{int8(0), uint32(20580498), uint32(40191224)},
+		key: PRReviewThreadKeyV2{20580498, 40191224},
+	},
+	{
+		id:  "PRRC_kwDOAToIks4Dmt1A", // kubernetes/kubernetes#24536, first thread, first comment
+		typ: TypePullRequestReviewComment,
+		raw: []any{int8(0), uint32(20580498), uint32(60480832)},
+		key: PRReviewCommentKeyV2{20580498, 60480832},
+		v1:  "MDI0OlB1bGxSZXF1ZXN0UmV2aWV3Q29tbWVudDYwNDgwODMy",
 	},
 	{
 		id:  "REF_kwDOAWBuf7FyZWZzL2hlYWRzL21hc3Rlcg", // golang/go@master
 		typ: TypeRef,
 		raw: []any{int8(0), uint32(23096959), "refs/heads/master"},
 		key: RefKey{23096959, "refs/heads/master"},
+		v1:  "MDM6UmVmMjMwOTY5NTk6cmVmcy9oZWFkcy9tYXN0ZXI=",
 	},
 	{
 		id:  "C_kwDOAWBuf9oAKGYyMWJlMmZkYzZmMWJlY2RiZWQxNTkyZWEwYjI0NWNkZWVkYzVhYzg", // golang/go@f21be2fdc6f1becdbed1592ea0b245cdeedc5ac8
 		typ: TypeCommit,
 		raw: []any{int8(0), uint32(23096959), "f21be2fdc6f1becdbed1592ea0b245cdeedc5ac8"},
 		key: CommitKey{23096959, "f21be2fdc6f1becdbed1592ea0b245cdeedc5ac8"},
+		v1:  "MDY6Q29tbWl0MjMwOTY5NTk6ZjIxYmUyZmRjNmYxYmVjZGJlZDE1OTJlYTBiMjQ1Y2RlZWRjNWFjOA==",
 	},
 	{
 		id:  "RE_kwDOAToIks4ACZFR", // Kubernetes v0.4
 		typ: TypeRelease,
 		raw: []any{int8(0), uint32(20580498), uint32(627025)},
 		key: ReleaseKeyV2{20580498, 627025},
+		v1:  "MDc6UmVsZWFzZTYyNzAyNQ==",
 	},
 	{
 		id:  "PRO_kwLOAWBuf84ANtZO", // golang, Proposals (old)
 		typ: TypeProject,
 		raw: []any{int8(2), uint32(23096959), uint32(3593806)},
 		key: ProjectKeyV2{23096959, 3593806},
+		v1:  "MDc6UHJvamVjdDM1OTM4MDY=",
 	},
 	{
 		id:  "U_kgDOAIK4fw", // gopherbot
 		typ: TypeUser,
 		raw: []any{int8(0), uint32(8566911)},
 		key: UserKey{8566911},
+		v1:  "MDQ6VXNlcjg1NjY5MTE=",
 	},
 	{
 		id:  "BOT_kgDOAvZaBQ", // dependabot
 		typ: TypeBot,
 		raw: []any{int8(0), uint32(49699333)},
 		key: BotKey{49699333},
+		v1:  "MDM6Qm90NDk2OTkzMzM=",
 	},
 	{
 		id:  "LAN_kgDMvg",
 		typ: TypeLanguage,
 		raw: []any{int8(0), uint8(190)},
 		key: LangKey{190},
+		v1:  "MDg6TGFuZ3VhZ2UxOTA=",
 	},
 	{
 		id:  "L_kgCsYnNkLTMtY2xhdXNl",
@@ -163,6 +202,12 @@ func TestIDv2(t *testing.T) {
 					base64.StdEncoding.EncodeToString(rkey2), hex.EncodeToString(rkey2),
 				)
 				require.Equal(t, c.id, got)
+			}
+
+			if c.v1 != "" {
+				k1, ok := key.(KeyV1)
+				require.True(t, ok)
+				require.Equal(t, c.v1, EncodeV1(k1))
 			}
 		})
 	}
