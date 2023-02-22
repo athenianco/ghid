@@ -13,7 +13,7 @@
 // handled well in our opinion.
 //
 // This library solves a problem: if you already have a huge dataset of cached info based on GitHub's GraphQL data,
-// and you want to migrate it to the new ID format in offline mode (without hitting the actual API).
+// and you want to migrate it to the new ID format in offline mode (without hitting the actual API) - we've got you covered..
 // This project provides a CLI and a Go library to handle these cases. As a bonus, it allows introspection of ID contents.
 // When your client receives an ID, you can instantly tell which type it contains, what is the commit SHA,
 // which repo it belongs to, etc. It can be useful as an optimization for some use cases.
