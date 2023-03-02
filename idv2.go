@@ -75,6 +75,7 @@ var (
 		"DEME": TypeDemilestonedEvent,
 		"HRDE": TypeHeadRefDeletedEvent,
 		"HRRE": TypeHeadRefRestoredEvent,
+		"MADE": TypeMarkedAsDuplicateEvent,
 		"PRRC": TypePullRequestReviewComment,
 		"PRRT": TypePullRequestReviewThread,
 		"PURC": TypePullRequestCommit,
@@ -83,15 +84,19 @@ var (
 		"RFRE": TypeReadyForReviewEvent,
 		"RRRE": TypeReviewRequestRemovedEvent,
 		"TREE": TypeTree,
+		"UADE": TypeUnmarkedAsDuplicateEvent,
 		"UNLE": TypeUnlabeledEvent,
 		"UNPE": TypeUnpinnedEvent,
 
 		"ABCFE": TypeAutomaticBaseChangeFailedEvent,
 		"ABCSE": TypeAutomaticBaseChangeSucceededEvent,
 		"BRFPE": TypeBaseRefForcePushedEvent,
+		"CITDE": TypeConvertedToDiscussionEvent,
 		"CNTIE": TypeConvertedNoteToIssueEvent,
 		"HRFPE": TypeHeadRefForcePushedEvent,
 		"MCIPE": TypeMovedColumnsInProjectEvent,
+		"PRCCT": TypePullRequestCommitCommentThread,
+		"UNLOE": TypeUnlockedEvent,
 	}
 	idv2TypeToPref = make(map[string]string)
 )
