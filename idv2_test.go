@@ -89,6 +89,13 @@ var casesV2 = []struct {
 		v1:  "MDY6Q29tbWl0MjMwOTY5NTk6ZjIxYmUyZmRjNmYxYmVjZGJlZDE1OTJlYTBiMjQ1Y2RlZWRjNWFjOA==",
 	},
 	{
+		id:  "TA_kwDOAToIktoAKDJkOWYzOTcyODc2MzFlZDBhYTJlZTNiZDc1NjVmNmRhYWE0YTZhNzY", // kubernetes@v0.4
+		typ: TypeTag,
+		raw: []any{int8(0), uint32(20580498), "2d9f397287631ed0aa2ee3bd7565f6daaa4a6a76"},
+		key: TagKey{20580498, "2d9f397287631ed0aa2ee3bd7565f6daaa4a6a76"},
+		v1:  "MDM6VGFnMjA1ODA0OTg6MmQ5ZjM5NzI4NzYzMWVkMGFhMmVlM2JkNzU2NWY2ZGFhYTRhNmE3Ng==",
+	},
+	{
 		id:  "RE_kwDOAToIks4ACZFR", // Kubernetes v0.4
 		typ: TypeRelease,
 		raw: []any{int8(0), uint32(20580498), uint32(627025)},

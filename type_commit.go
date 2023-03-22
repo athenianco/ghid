@@ -38,6 +38,35 @@ func init() {
 		}
 		return CommitKey{RepoID: RepoID(repo), SHA: sha}, nil
 	})
+	RegisterDecodeV1(TypeTag, func(key []byte) (KeyV1, error) {
+		repo, rest, err := decodeV1InRepo(TypeTag, key)
+		if err != nil {
+			return nil, err
+		}
+		return TagKey{RepoID: repo, SHA: string(rest)}, nil
+	})
+	RegisterDecodeV2(TypeTag, func(key msgpack.RawMessage) (KeyV2, error) {
+		var arr []any
+		err := msgpack.Unmarshal(key, &arr)
+		if err != nil {
+			return nil, err
+		}
+		if len(arr) != 3 {
+			return nil, fmt.Errorf("unsupported IDv2 tag key: %#v", arr)
+		}
+		if v, ok := asUint64(arr[0]); !ok || v != 0 {
+			return nil, fmt.Errorf("unsupported IDv2 tag key: %#v", arr)
+		}
+		repo, ok := asUint64(arr[1])
+		if !ok {
+			return nil, fmt.Errorf("unsupported IDv2 tag key: %#v", arr)
+		}
+		sha, ok := arr[2].(string)
+		if !ok {
+			return nil, fmt.Errorf("unsupported IDv2 tag key: %#v", arr)
+		}
+		return TagKey{RepoID: RepoID(repo), SHA: sha}, nil
+	})
 }
 
 var (
@@ -65,6 +94,41 @@ func (r CommitKey) KeyV1() string {
 
 // KeyV2 implements KeyV2.
 func (r CommitKey) KeyV2() msgpack.RawMessage {
+	// GitHub encodes commit SHA as string16, not string8, even though SHA length is only 40 (<256). Optimization?
+	n := len(r.SHA)
+	buf := make([]byte, 1+2+n)
+	buf[0] = msgpcode.Str16
+	buf[1] = byte(n >> 8)
+	buf[2] = byte(n)
+	copy(buf[3:], r.SHA)
+	return mustEncodeV2([]any{uint(0), uint(r.RepoID), msgpack.RawMessage(buf)})
+}
+
+var (
+	_ KeyV1 = TagKey{}
+	_ KeyV2 = TagKey{}
+)
+
+// TagKey is a unique key for Tag nodes.
+//
+// See https://docs.github.com/en/graphql/reference/objects#tag.
+type TagKey struct {
+	RepoID RepoID // corresponds to repository.databaseId
+	SHA    string // corresponds to oid
+}
+
+// Type implements Key.
+func (r TagKey) Type() string {
+	return TypeTag
+}
+
+// KeyV1 implements KeyV1.
+func (r TagKey) KeyV1() string {
+	return strconv.FormatUint(uint64(r.RepoID), 10) + ":" + r.SHA
+}
+
+// KeyV2 implements KeyV2.
+func (r TagKey) KeyV2() msgpack.RawMessage {
 	// GitHub encodes commit SHA as string16, not string8, even though SHA length is only 40 (<256). Optimization?
 	n := len(r.SHA)
 	buf := make([]byte, 1+2+n)
