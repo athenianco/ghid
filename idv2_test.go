@@ -124,6 +124,13 @@ var casesV2 = []struct {
 		v1:  "MDM6Qm90NDk2OTkzMzM=",
 	},
 	{
+		id:  "M_kgDOA3OWmQ",
+		typ: TypeMannequin,
+		raw: []any{int8(0), uint32(57906841)},
+		key: MannequinKey{57906841},
+		v1:  "MDk6TWFubmVxdWluNTc5MDY4NDE=",
+	},
+	{
 		id:  "LAN_kgDMvg",
 		typ: TypeLanguage,
 		raw: []any{int8(0), uint8(190)},

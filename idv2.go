@@ -16,6 +16,7 @@ var (
 		"C": TypeCommit,
 		"I": TypeIssue,
 		"L": TypeLicense,
+		"M": TypeMannequin,
 		"O": TypeOrganization,
 		"R": TypeRepository,
 		"T": TypeTeam,
