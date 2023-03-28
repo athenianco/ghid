@@ -69,6 +69,39 @@ func init() {
 		}
 		return PRReviewCommentKeyV2{RepoID: RepoID(arr[0]), ID: arr[1]}, nil
 	})
+	RegisterDecodeV1(TypePullRequestCommit, func(key []byte) (KeyV1, error) {
+		pr, rest, err := decodeV1IDAndRest(TypePullRequestCommit, key)
+		if err != nil {
+			return nil, err
+		}
+		return PRCommitKeyV1{PR: pr, SHA: string(rest)}, nil
+	})
+	RegisterDecodeV2(TypePullRequestCommit, func(key msgpack.RawMessage) (KeyV2, error) {
+		var arr []any
+		err := msgpack.Unmarshal(key, &arr)
+		if err != nil {
+			return nil, err
+		}
+		if len(arr) != 4 {
+			return nil, fmt.Errorf("unsupported IDv2 PR commit key: %#v", arr)
+		}
+		if v, ok := asUint64(arr[0]); !ok || v != 0 {
+			return nil, fmt.Errorf("unsupported IDv2 PR commit key: %#v", arr)
+		}
+		repo, ok := asUint64(arr[1])
+		if !ok {
+			return nil, fmt.Errorf("unsupported IDv2 PR commit key: %#v", arr)
+		}
+		pr, ok := asUint64(arr[2])
+		if !ok {
+			return nil, fmt.Errorf("unsupported IDv2 PR commit key: %#v", arr)
+		}
+		sha, ok := arr[3].(string)
+		if !ok {
+			return nil, fmt.Errorf("unsupported IDv2 PR commit key: %#v", arr)
+		}
+		return PRCommitKeyV2{RepoID: RepoID(repo), PR: pr, SHA: sha}, nil
+	})
 }
 
 var (
@@ -265,4 +298,57 @@ func (r PRReviewCommentKeyV2) KeyV1() string {
 // KeyV2 implements KeyV2.
 func (r PRReviewCommentKeyV2) KeyV2() msgpack.RawMessage {
 	return mustEncodeV2([]any{uint(0), uint(r.RepoID), uint(r.ID)})
+}
+
+var (
+	_ KeyV1NoRepo = PRCommitKeyV1{}
+	_ KeyV2       = PRCommitKeyV2{}
+)
+
+// PRCommitKeyV1 is a unique IDv1 key for PullRequestCommit nodes.
+//
+// See https://docs.github.com/en/graphql/reference/objects#pullrequestcommit.
+type PRCommitKeyV1 struct {
+	PR  uint64 // corresponds to pullRequest.databaseId
+	SHA string
+}
+
+// Type implements Key.
+func (r PRCommitKeyV1) Type() string {
+	return TypePullRequestCommit
+}
+
+// KeyV1 implements KeyV1.
+func (r PRCommitKeyV1) KeyV1() string {
+	return strconv.FormatUint(r.PR, 10) + ":" + r.SHA
+}
+
+// WithRepoV2 implements KeyV1NoRepo.
+func (r PRCommitKeyV1) WithRepoV2(repo RepoID) KeyV2 {
+	return PRCommitKeyV2{RepoID: repo, PR: r.PR, SHA: r.SHA}
+}
+
+// PRCommitKeyV2 is a unique IDv2 key for PullRequestCommit nodes.
+//
+// See https://docs.github.com/en/graphql/reference/objects#pullrequestcommit.
+type PRCommitKeyV2 struct {
+	RepoID RepoID // corresponds to repository.databaseId
+	PR     uint64 // corresponds to pullRequest.databaseId
+	SHA    string
+}
+
+// Type implements Key.
+func (r PRCommitKeyV2) Type() string {
+	return TypePullRequestCommit
+}
+
+// KeyV1 implements KeyV1.
+func (r PRCommitKeyV2) KeyV1() string {
+	return strconv.FormatUint(r.PR, 10) + ":" + r.SHA
+}
+
+// KeyV2 implements KeyV2.
+func (r PRCommitKeyV2) KeyV2() msgpack.RawMessage {
+	// GitHub encodes commit SHA as string16, not string8, even though SHA length is only 40 (<256). Optimization?
+	return mustEncodeV2([]any{uint(0), uint(r.RepoID), uint(r.PR), msgpackEncodeStr16(r.SHA)})
 }

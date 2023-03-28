@@ -97,7 +97,7 @@ func decodeV1(id string) (string, []byte, error) {
 	return typ, key, nil
 }
 
-func decodeV1InRepo(typ string, key []byte) (RepoID, []byte, error) {
+func decodeV1IDAndRest(typ string, key []byte) (uint64, []byte, error) {
 	i := bytes.IndexByte(key, ':')
 	if i < 0 {
 		return 0, nil, fmt.Errorf("invalid IDv1 key for %s: %q", typ, string(key))
@@ -106,7 +106,7 @@ func decodeV1InRepo(typ string, key []byte) (RepoID, []byte, error) {
 	if err != nil {
 		return 0, nil, fmt.Errorf("failed to decode %s repo id: %w", typ, err)
 	}
-	return RepoID(repoID), key[i+1:], nil
+	return repoID, key[i+1:], nil
 }
 
 var (

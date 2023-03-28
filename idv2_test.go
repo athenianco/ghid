@@ -89,6 +89,13 @@ var casesV2 = []struct {
 		v1:  "MDY6Q29tbWl0MjMwOTY5NTk6ZjIxYmUyZmRjNmYxYmVjZGJlZDE1OTJlYTBiMjQ1Y2RlZWRjNWFjOA==",
 	},
 	{
+		id:  "PURC_lADOAWBuf84Bh4UQ2gAoZjk4MWJmOGUyMGMxMzk0NmM2MjdkYzg0MWNlZGJlMWE2OTQ5MTdkNg",
+		typ: TypePullRequestCommit,
+		raw: []any{int8(0), uint32(23096959), uint32(25658640), "f981bf8e20c13946c627dc841cedbe1a694917d6"},
+		key: PRCommitKeyV2{23096959, 25658640, "f981bf8e20c13946c627dc841cedbe1a694917d6"},
+		v1:  "MDE3OlB1bGxSZXF1ZXN0Q29tbWl0MjU2NTg2NDA6Zjk4MWJmOGUyMGMxMzk0NmM2MjdkYzg0MWNlZGJlMWE2OTQ5MTdkNg==",
+	},
+	{
 		id:  "TA_kwDOAToIktoAKDJkOWYzOTcyODc2MzFlZDBhYTJlZTNiZDc1NjVmNmRhYWE0YTZhNzY", // kubernetes@v0.4
 		typ: TypeTag,
 		raw: []any{int8(0), uint32(20580498), "2d9f397287631ed0aa2ee3bd7565f6daaa4a6a76"},

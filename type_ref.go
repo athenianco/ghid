@@ -9,11 +9,11 @@ import (
 
 func init() {
 	RegisterDecodeV1(TypeRef, func(key []byte) (KeyV1, error) {
-		repo, rest, err := decodeV1InRepo(TypeRef, key)
+		repo, rest, err := decodeV1IDAndRest(TypeRef, key)
 		if err != nil {
 			return nil, err
 		}
-		return RefKey{RepoID: repo, RefName: string(rest)}, nil
+		return RefKey{RepoID: RepoID(repo), RefName: string(rest)}, nil
 	})
 	RegisterDecodeV2(TypeRef, func(key msgpack.RawMessage) (KeyV2, error) {
 		var arr []any
