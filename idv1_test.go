@@ -12,6 +12,7 @@ var casesV1 = []struct {
 	raw    string
 	key    KeyV1
 	v2     string
+	v2org  OrgID
 	v2repo RepoID
 }{
 	{
@@ -20,6 +21,14 @@ var casesV1 = []struct {
 		raw: "4314092",
 		key: OrgKey{4314092},
 		v2:  "O_kgDOAEHT7A",
+	},
+	{
+		id:    "MDQ6VGVhbTM1NTQxNTc=",
+		typ:   TypeTeam,
+		raw:   "3554157",
+		key:   TeamKeyV1{3554157},
+		v2:    "T_kwDOA3oJoM4ANjtt",
+		v2org: 58329504,
 	},
 	{
 		id:  "MDEwOlJlcG9zaXRvcnkyMzA5Njk1OQ==", // golang/go
@@ -185,7 +194,10 @@ func TestIDv1(t *testing.T) {
 			require.Equal(t, c.id, got)
 
 			if c.v2 != "" {
-				v2, err := Upgrade(c.id, &UpgradeOpts{RepoID: c.v2repo})
+				v2, err := Upgrade(c.id, &UpgradeOpts{
+					OrgID:  c.v2org,
+					RepoID: c.v2repo,
+				})
 				require.NoError(t, err)
 				require.Equal(t, c.v2, v2)
 			}

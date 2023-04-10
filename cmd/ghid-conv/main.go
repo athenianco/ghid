@@ -18,6 +18,7 @@ var (
 	fOut  = flag.String("o", "", "output file")
 	fJson = flag.Bool("json", false, "use json format instead of text")
 	fRepo = flag.Uint64("repo", 0, "use specified repo id for upgrading ids")
+	fOrg  = flag.Uint64("org", 0, "use specified org id for upgrading ids")
 )
 
 func main() {
@@ -90,6 +91,7 @@ func processJSON(w io.Writer, r io.Reader) error {
 
 func convert(id string) (string, error) {
 	return ghid.Upgrade(id, &ghid.UpgradeOpts{
+		OrgID:  ghid.OrgID(*fOrg),
 		RepoID: ghid.RepoID(*fRepo),
 	})
 }

@@ -141,3 +141,10 @@ type KeyV1NoRepo interface {
 	// WithRepoV2 uses RepoID to upgrade KeyV1 to KeyV2.
 	WithRepoV2(repo RepoID) KeyV2
 }
+
+// KeyV1NoOrg is an optional interface for KeyV1 that allows upgrades to KeyV2, given OrgID.
+type KeyV1NoOrg interface {
+	KeyV1
+	// WithOrgV2 uses OrgID to upgrade KeyV1 to KeyV2.
+	WithOrgV2(org OrgID) KeyV2
+}

@@ -27,6 +27,13 @@ var casesV2 = []struct {
 		v1:  "MDEyOk9yZ2FuaXphdGlvbjQzMTQwOTI=",
 	},
 	{
+		id:  "T_kwDOA3oJoM4ANjtt",
+		typ: TypeTeam,
+		raw: []any{int8(0), uint32(58329504), uint32(3554157)},
+		key: TeamKeyV2{58329504, 3554157},
+		v1:  "MDQ6VGVhbTM1NTQxNTc=",
+	},
+	{
 		id:  "R_kgDOAWBufw", // golang/go
 		typ: TypeRepository,
 		raw: []any{int8(0), uint32(23096959)},

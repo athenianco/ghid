@@ -68,6 +68,8 @@ func Decode(id string) (Key, error) {
 
 // UpgradeOpts provide
 type UpgradeOpts struct {
+	// OrgID will be used for ID upgrade, if it wasn't previously encoded in IDv1, but is required for IDv2.
+	OrgID OrgID
 	// RepoID will be used for ID upgrade, if it wasn't previously encoded in IDv1, but is required for IDv2.
 	RepoID RepoID
 }
@@ -116,6 +118,9 @@ func UpgradeKey(key Key, opts *UpgradeOpts) (Key, error) {
 func upgradeKey(key Key, opts *UpgradeOpts) (KeyV2, error) {
 	if key2, ok := key.(KeyV2); ok {
 		return key2, nil
+	}
+	if ukey, ok := key.(KeyV1NoOrg); ok && opts != nil && opts.OrgID != 0 {
+		return ukey.WithOrgV2(opts.OrgID), nil
 	}
 	if ukey, ok := key.(KeyV1NoRepo); ok && opts != nil && opts.RepoID != 0 {
 		return ukey.WithRepoV2(opts.RepoID), nil
