@@ -45,6 +45,14 @@ var casesV1 = []struct {
 		v2repo: 23096959,
 	},
 	{
+		id:     "MDU6TGFiZWwxNTA4ODAyMDk=", // golang/go, Documentation
+		typ:    TypeLabel,
+		raw:    "150880209",
+		key:    LabelKeyV1{150880209},
+		v2:     "LA_kwDOAWBuf84I_j_R",
+		v2repo: 23096959,
+	},
+	{
 		id:     "MDEyOklzc3VlQ29tbWVudDY2MDQ2Mjkz", // golang/go#1, first comment
 		typ:    TypeIssueComment,
 		raw:    "66046293",

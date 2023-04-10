@@ -48,6 +48,13 @@ var casesV2 = []struct {
 		v1:  "MDExOlB1bGxSZXF1ZXN0MjU2NTg2NDA=",
 	},
 	{
+		id:  "LA_kwDOAWBuf84I_j_R", // // golang/go, Documentation
+		typ: TypeLabel,
+		raw: []any{int8(0), uint32(23096959), uint32(150880209)},
+		key: LabelKeyV2{23096959, 150880209},
+		v1:  "MDU6TGFiZWwxNTA4ODAyMDk=",
+	},
+	{
 		id:  "IC_kwDOAWBuf84D78lV", // golang/go#1, first comment
 		typ: TypeIssueComment,
 		raw: []any{int8(0), uint32(23096959), uint32(66046293)},
