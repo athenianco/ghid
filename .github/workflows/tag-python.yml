@@ -10,7 +10,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ ubuntu-20.04, macos-latest, windows-latest ]
+        # todo: add windows-latest when this is fixed: https://github.com/go-python/gopy/issues/325
+        os: [ ubuntu-20.04, macos-latest ]
         python: [ "3{0}10", "3{0}11" ]
     defaults:
       run:
@@ -30,7 +31,6 @@ jobs:
           GOBIN=$(pwd) go install github.com/go-python/gopy@latest
           export PATH="$(pwd):$PATH"
           gopy pkg -author "Athenian" -desc "Python bindings to ghid, decoding and encoding utilities for GitHub GraphQL Node IDs" -email "denys@athenian.co" -output python -url "https://github.com/athenianco/ghid" -vm python3 -version ${GITHUB_REF_NAME#v} github.com/athenianco/ghid
-          patch python/setup.py < python/setup.py.patch
       - if: "matrix.os == 'ubuntu-20.04'"
         run: |
           set -x
