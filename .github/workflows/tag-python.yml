@@ -1,0 +1,65 @@
+name: Publish Python package
+
+on:
+  push:
+    tags:
+      - v**
+
+jobs:
+  build-wheels:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-20.04, macos-latest, windows-latest ]
+        python: [ "3{0}10", "3{0}11" ]
+    defaults:
+      run:
+        shell: bash
+    env:
+      PIP_DISABLE_PIP_VERSION_CHECK: 1
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ format(matrix.python, '.') }}
+      - run: |
+          set -x
+          python3 -m pip install pybindgen
+          GOBIN=$(pwd) go install golang.org/x/tools/cmd/goimports@latest
+          GOBIN=$(pwd) go install github.com/go-python/gopy@latest
+          export PATH="$(pwd):$PATH"
+          gopy pkg -author "Athenian" -desc "Python bindings to ghid, decoding and encoding utilities for GitHub GraphQL Node IDs" -email "denys@athenian.co" -output python -url "https://github.com/athenianco/ghid" -vm python3 -version ${GITHUB_REF_NAME#v} github.com/athenianco/ghid
+          patch python/setup.py < python/setup.py.patch
+      - if: "matrix.os == 'ubuntu-20.04'"
+        run: |
+          set -x
+          patchelf --remove-needed libpython${{ format(matrix.python, '.') }}.so.1.0 python/ghid/_ghid.cpython-*.so
+      - uses: pypa/cibuildwheel@v2.11.2
+        with:
+          package-dir: python
+        env:
+          CIBW_BUILD_VERBOSITY: 1
+            "cp310-*", "cp311-*"
+          CIBW_BUILD: cp${{ format(matrix.python, '') }}-*
+          CIBW_SKIP: cp${{ format(matrix.python, '') }}-musllinux*
+          CIBW_MANYLINUX_X86_64_IMAGE: manylinux_2_28
+          CIBW_ARCHS: auto64
+      - uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: wheelhouse/*.whl
+  publish:
+    needs: [ build-wheels ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: dist
+          path: dist/
+      - run: ls -al dist/
+      - name: Upload to PyPI
+        uses: pypa/gh-action-pypi-publish@master
+        with:
+          user: __token__
+          password: ${{ secrets.PYPI_TOKEN }}
