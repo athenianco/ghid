@@ -9,6 +9,9 @@ import (
 
 func init() {
 	RegisterDecodeV1(TypeLabel, func(key []byte) (KeyV1, error) {
+		if len(key) == 0 {
+			return LabelKeyV1{ID: 0}, nil
+		}
 		id, err := strconv.ParseUint(string(key), 10, 64)
 		if err != nil {
 			return nil, fmt.Errorf("failed to decode label id: %w", err)
@@ -43,6 +46,9 @@ func (r LabelKeyV1) Type() string {
 
 // KeyV1 implements KeyV1.
 func (r LabelKeyV1) KeyV1() string {
+	if r.ID == 0 {
+		return ""
+	}
 	return strconv.FormatUint(r.ID, 10)
 }
 

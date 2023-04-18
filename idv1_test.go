@@ -7,13 +7,14 @@ import (
 )
 
 var casesV1 = []struct {
-	id     string
-	typ    string
-	raw    string
-	key    KeyV1
-	v2     string
-	v2org  OrgID
-	v2repo RepoID
+	id        string
+	typ       string
+	raw       string
+	key       KeyV1
+	v2        string
+	v2org     OrgID
+	v2repo    RepoID
+	parseOnly bool
 }{
 	{
 		id:  "MDEyOk9yZ2FuaXphdGlvbjQzMTQwOTI=", // golang
@@ -60,6 +61,12 @@ var casesV1 = []struct {
 		key:    LabelKeyV1{150880209},
 		v2:     "LA_kwDOAWBuf84I_j_R",
 		v2repo: 23096959,
+	},
+	{
+		id:  "MDU6TGFiZWw=",
+		typ: TypeLabel,
+		raw: "",
+		key: LabelKeyV1{0},
 	},
 	{
 		id:     "MDEyOklzc3VlQ29tbWVudDY2MDQ2Mjkz", // golang/go#1, first comment
