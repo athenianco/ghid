@@ -207,6 +207,16 @@ func TestIDv1(t *testing.T) {
 				})
 				require.NoError(t, err)
 				require.Equal(t, c.v2, v2)
+
+				// Ensure we expose org/repo ID interfaces.
+				key2, err := DecodeV2(v2)
+				require.NoError(t, err)
+				if c.v2org != 0 {
+					_ = key2.(KeyWithOrg)
+				}
+				if c.v2repo != 0 {
+					_ = key2.(KeyWithRepo)
+				}
 			}
 		})
 	}

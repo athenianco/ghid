@@ -78,6 +78,11 @@ func (r IssueKeyV2) Type() string {
 	return TypeIssue
 }
 
+// GetRepoID implements KeyWithRepo.
+func (r IssueKeyV2) GetRepoID() RepoID {
+	return r.RepoID
+}
+
 // KeyV1 implements KeyV1.
 func (r IssueKeyV2) KeyV1() string {
 	return strconv.FormatUint(r.ID, 10)
@@ -126,6 +131,11 @@ type IssueCommentKeyV2 struct {
 // Type implements Key.
 func (r IssueCommentKeyV2) Type() string {
 	return TypeIssueComment
+}
+
+// GetRepoID implements KeyWithRepo.
+func (r IssueCommentKeyV2) GetRepoID() RepoID {
+	return r.RepoID
 }
 
 // KeyV1 implements KeyV1.

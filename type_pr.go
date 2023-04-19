@@ -144,6 +144,11 @@ func (r PRKeyV2) Type() string {
 	return TypePullRequest
 }
 
+// GetRepoID implements KeyWithRepo.
+func (r PRKeyV2) GetRepoID() RepoID {
+	return r.RepoID
+}
+
 // KeyV1 implements KeyV1.
 func (r PRKeyV2) KeyV1() string {
 	return strconv.FormatUint(r.ID, 10)
@@ -192,6 +197,11 @@ type PRReviewKeyV2 struct {
 // Type implements Key.
 func (r PRReviewKeyV2) Type() string {
 	return TypePullRequestReview
+}
+
+// GetRepoID implements KeyWithRepo.
+func (r PRReviewKeyV2) GetRepoID() RepoID {
+	return r.RepoID
 }
 
 // KeyV1 implements KeyV1.
@@ -245,6 +255,11 @@ func (r PRReviewThreadKeyV2) Type() string {
 	return TypePullRequestReviewThread
 }
 
+// GetRepoID implements KeyWithRepo.
+func (r PRReviewThreadKeyV2) GetRepoID() RepoID {
+	return r.RepoID
+}
+
 // KeyV2 implements KeyV2.
 func (r PRReviewThreadKeyV2) KeyV2() msgpack.RawMessage {
 	return mustEncodeV2([]any{uint(0), uint(r.RepoID), uint(r.ID)})
@@ -288,6 +303,11 @@ type PRReviewCommentKeyV2 struct {
 // Type implements Key.
 func (r PRReviewCommentKeyV2) Type() string {
 	return TypePullRequestReviewComment
+}
+
+// GetRepoID implements KeyWithRepo.
+func (r PRReviewCommentKeyV2) GetRepoID() RepoID {
+	return r.RepoID
 }
 
 // KeyV1 implements KeyV1.
@@ -340,6 +360,11 @@ type PRCommitKeyV2 struct {
 // Type implements Key.
 func (r PRCommitKeyV2) Type() string {
 	return TypePullRequestCommit
+}
+
+// GetRepoID implements KeyWithRepo.
+func (r PRCommitKeyV2) GetRepoID() RepoID {
+	return r.RepoID
 }
 
 // KeyV1 implements KeyV1.

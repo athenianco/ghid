@@ -60,6 +60,11 @@ func (r OrgKey) Type() string {
 	return TypeOrganization
 }
 
+// GetOrgID implements KeyWithOrg.
+func (r OrgKey) GetOrgID() OrgID {
+	return r.ID
+}
+
 // KeyV1 implements KeyV1.
 func (r OrgKey) KeyV1() string {
 	return strconv.FormatUint(uint64(r.ID), 10)
@@ -108,6 +113,11 @@ type TeamKeyV2 struct {
 // Type implements Key.
 func (r TeamKeyV2) Type() string {
 	return TypeTeam
+}
+
+// GetOrgID implements KeyWithOrg.
+func (r TeamKeyV2) GetOrgID() OrgID {
+	return r.OrgID
 }
 
 // KeyV1 implements KeyV1.

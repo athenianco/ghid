@@ -70,6 +70,11 @@ func (r LabelKeyV2) Type() string {
 	return TypeLabel
 }
 
+// GetRepoID implements KeyWithRepo.
+func (r LabelKeyV2) GetRepoID() RepoID {
+	return r.RepoID
+}
+
 // KeyV1 implements KeyV1.
 func (r LabelKeyV2) KeyV1() string {
 	return strconv.FormatUint(r.ID, 10)

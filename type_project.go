@@ -64,6 +64,11 @@ func (r ProjectKeyV2) Type() string {
 	return TypeProject
 }
 
+// GetRepoID implements KeyWithRepo.
+func (r ProjectKeyV2) GetRepoID() RepoID {
+	return r.RepoID
+}
+
 // KeyV1 implements KeyV1.
 func (r ProjectKeyV2) KeyV1() string {
 	return strconv.FormatUint(r.ID, 10)

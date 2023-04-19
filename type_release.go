@@ -64,6 +64,11 @@ func (r ReleaseKeyV2) Type() string {
 	return TypeRelease
 }
 
+// GetRepoID implements KeyWithRepo.
+func (r ReleaseKeyV2) GetRepoID() RepoID {
+	return r.RepoID
+}
+
 // KeyV1 implements KeyV1.
 func (r ReleaseKeyV2) KeyV1() string {
 	return strconv.FormatUint(r.ID, 10)

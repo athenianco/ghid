@@ -46,6 +46,11 @@ func (r RepoKey) Type() string {
 	return TypeRepository
 }
 
+// GetRepoID implements KeyWithRepo.
+func (r RepoKey) GetRepoID() RepoID {
+	return r.ID
+}
+
 // KeyV1 implements KeyV1.
 func (r RepoKey) KeyV1() string {
 	return strconv.FormatUint(uint64(r.ID), 10)

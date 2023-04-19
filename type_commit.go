@@ -97,6 +97,11 @@ func (r CommitKey) Type() string {
 	return TypeCommit
 }
 
+// GetRepoID implements KeyWithRepo.
+func (r CommitKey) GetRepoID() RepoID {
+	return r.RepoID
+}
+
 // KeyV1 implements KeyV1.
 func (r CommitKey) KeyV1() string {
 	return strconv.FormatUint(uint64(r.RepoID), 10) + ":" + r.SHA
@@ -124,6 +129,11 @@ type TagKey struct {
 // Type implements Key.
 func (r TagKey) Type() string {
 	return TypeTag
+}
+
+// GetRepoID implements KeyWithRepo.
+func (r TagKey) GetRepoID() RepoID {
+	return r.RepoID
 }
 
 // KeyV1 implements KeyV1.

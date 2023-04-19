@@ -37,6 +37,20 @@ type Key interface {
 	Type() string
 }
 
+// KeyWithOrg is an interface for keys containing organization ID.
+type KeyWithOrg interface {
+	Key
+	// GetOrgID returns organization ID.
+	GetOrgID() OrgID
+}
+
+// KeyWithRepo is an interface for keys containing repository ID.
+type KeyWithRepo interface {
+	Key
+	// GetRepoID returns repository ID.
+	GetRepoID() RepoID
+}
+
 // Type returns a GitHub node type for a given ID.
 //
 // Type names directly correspond to Node implementation in GraphQL API:
